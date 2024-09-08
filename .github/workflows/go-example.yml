@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+  schedule:
+    - cron: "*/15 0-23 * * 1-6"
+
 jobs:
   BuildGo:
     runs-on: ubuntu-latest
