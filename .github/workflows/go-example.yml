@@ -1,0 +1,42 @@
+name: Go Example Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  BuildGo:
+    runs-on: ubuntu-latest
+    env:
+      FILE_NAME: hello-server
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.16'
+
+      - name: Build for Linux
+        run: |
+          go build $FILE_NAME.go
+          echo "Build for Linux completed"
+
+      - name: Upload artifact for Linux
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: linux
+          path: ./${{ env.FILE_NAME }}
+
+      - name: Build for Windows
+        run: |
+          GOOS=windows GOARCH=amd64 go build $FILE_NAME.go
+          echo "Build for Windows completed"
+
+      - name: Upload artifact for Windows
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: windows
+          path: ./${{ env.FILE_NAME }}.exe
