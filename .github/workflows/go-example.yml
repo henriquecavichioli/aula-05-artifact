@@ -54,6 +54,9 @@ jobs:
         with:
           name: linux
 
+      - name: List directory contents
+        run: ls -l
+
       - name: Run run.sh script
         run: source ./run.sh
 
